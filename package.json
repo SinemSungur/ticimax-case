@@ -1,0 +1,39 @@
+{
+    "name": "vue2-product-list",
+    "version": "1.0.0",
+    "description": "Product List Application with Atomic Design",
+    "author": "Sinem Sungur",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "eslint --ext .js,.vue src",
+        "lint:fix": "eslint --ext .js,.vue src --fix"
+    },
+    "dependencies": {
+        "axios": "^0.27.2",
+        "core-js": "^3.8.3",
+        "vue": "^2.6.14",
+        "vue-router": "^3.5.3",
+        "vuex": "^3.6.2"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.27.4",
+        "@babel/eslint-parser": "^7.27.5",
+        "@vue/cli-plugin-babel": "~5.0.0",
+        "@vue/cli-plugin-router": "~5.0.0",
+        "@vue/cli-plugin-vuex": "~5.0.0",
+        "@vue/cli-service": "~5.0.0",
+        "@vue/eslint-config-prettier": "^10.2.0",
+        "eslint": "^8.57.1",
+        "eslint-plugin-vue": "^8.7.1",
+        "sass": "^1.32.7",
+        "sass-loader": "^12.0.0",
+        "vue-template-compiler": "^2.6.14"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
+    ]
+}
