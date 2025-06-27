@@ -41,7 +41,6 @@ This project demonstrates a production-ready product list application built with
 - **Pinia** - Modern state management (replacing Vuex)
 - **Vue Router 4.x** - Updated routing system
 - **Composition API** - Modern Vue 3 development pattern
-- **TypeScript** - Type safety and better DX
 - **Vite** - Modern build tool (replacing Vue CLI)
 - **Updated Dependencies** - All packages compatible with Vue 3
 
@@ -147,7 +146,6 @@ The Vuex store manages:
 ### Planned Migration (Pinia)
 Will be migrated to Pinia stores with:
 - **Composition API syntax** - Modern Vue 3 patterns
-- **Better TypeScript support** - Enhanced type safety
 - **Improved developer experience** - Simpler store definition
 - **Modular store structure** - Better code organization
 - **Automatic tree-shaking** - Smaller bundle size
