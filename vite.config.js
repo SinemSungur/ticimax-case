@@ -17,5 +17,20 @@ export default defineConfig({
         silenceDeprecations: ['legacy-js-api']
       }
     }
+  },
+  build: {
+    target: 'es2015',
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+    minify: 'esbuild',
+    rollupOptions: {
+      external: ['esbuild']
+    }
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'es2015'
+    }
   }
 }) 
