@@ -22,15 +22,6 @@ export default defineConfig({
     target: 'es2015',
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: false,
-    minify: 'esbuild',
-    rollupOptions: {
-      external: ['esbuild']
-    }
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      target: 'es2015'
-    }
+    sourcemap: false
   }
 }) 
