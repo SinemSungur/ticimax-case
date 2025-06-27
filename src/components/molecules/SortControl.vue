@@ -4,27 +4,20 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { BaseSelect } from '@/components'
 import { SORT_OPTIONS } from '@/constants/content'
 
-export default {
-  name: 'SortControl',
-  components: {
-    BaseSelect
-  },
-  props: {
-    currentSort: {
-      type: String,
-      default: ''
-    }
-  },
-  data() {
-    return {
-      sortOptions: SORT_OPTIONS
-    }
+defineProps({
+  currentSort: {
+    type: String,
+    default: ''
   }
-}
+})
+
+defineEmits(['sort-change'])
+
+const sortOptions = SORT_OPTIONS
 </script>
 
 <style lang="scss" scoped>

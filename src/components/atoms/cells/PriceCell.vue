@@ -4,21 +4,17 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { formatPrice } from '@/utils/tableHelpers'
 
-export default {
-  name: 'PriceCell',
-  props: {
-    value: {
-      type: [String, Number],
-      default: ''
-    }
-  },
-  methods: {
-    formatPrice
+defineProps({
+  value: {
+    type: [String, Number],
+    default: ''
   }
-}
+})
+
+defineOptions({ name: 'PriceCell' })
 </script>
 
 <style lang="scss" scoped>

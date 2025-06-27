@@ -1,24 +1,20 @@
 <template>
   <div class="discount-text">
-    {{ formatDiscount(value) }}
+    {{ formatDiscountMethod(value) }}
   </div>
 </template>
 
-<script>
+<script setup>
 import { formatDiscount } from '@/utils/tableHelpers'
 
-export default {
-  name: 'DiscountCell',
-  props: {
-    value: {
-      type: [String, Number],
-      default: ''
-    }
-  },
-  methods: {
-    formatDiscount
+defineProps({
+  value: {
+    type: [String, Number],
+    default: ''
   }
-}
+})
+
+const formatDiscountMethod = (value) => formatDiscount(value)
 </script>
 
 <style lang="scss" scoped>

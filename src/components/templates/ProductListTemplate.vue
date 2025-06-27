@@ -20,47 +20,38 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ProductGrid } from '@/components'
 import { PAGE_TITLES } from '@/constants/content'
 
-export default {
-  name: 'ProductListTemplate',
-  components: {
-    ProductGrid
+defineProps({
+  products: {
+    type: Array,
+    default: () => []
   },
-  props: {
-    products: {
-      type: Array,
-      default: () => []
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    error: {
-      type: Boolean,
-      default: false
-    },
-    currentSort: {
-      type: String,
-      default: ''
-    },
-    currentPage: {
-      type: Number,
-      default: 1
-    },
-    totalPages: {
-      type: Number,
-      default: 1
-    }
+  loading: {
+    type: Boolean,
+    default: false
   },
-  data() {
-    return {
-      PAGE_TITLES
-    }
+  error: {
+    type: Boolean,
+    default: false
+  },
+  currentSort: {
+    type: String,
+    default: ''
+  },
+  currentPage: {
+    type: Number,
+    default: 1
+  },
+  totalPages: {
+    type: Number,
+    default: 1
   }
-}
+})
+
+defineEmits(['retry', 'sort-change', 'page-change'])
 </script>
 
 <style lang="scss" scoped>

@@ -1,85 +1,52 @@
 <template>
   <div class="table-cell">
-    <component :is="componentName" v-bind="cellProps" />
+    <component :is="cellComponent" v-bind="cellProps" />
   </div>
 </template>
 
-<script>
-import {
-  ImageCell,
-  PriceCell,
-  DescriptionCell,
-  DiscountCell,
-  AvailabilityCell,
-  RatingCell,
-  SizeCell,
-  WeightCell,
-  CategoryCell,
-  DefaultCell
-} from './cells'
+<script setup>
+import { computed } from 'vue'
+import * as Cells from './cells'
 
-export default {
-  name: 'TableCell',
-  components: {
-    ImageCell,
-    PriceCell,
-    DescriptionCell,
-    DiscountCell,
-    AvailabilityCell,
-    RatingCell,
-    SizeCell,
-    WeightCell,
-    CategoryCell,
-    DefaultCell
+const props = defineProps({
+  type: {
+    type: String,
+    default: 'default'
   },
-  props: {
-    type: {
-      type: String,
-      default: 'default'
-    },
-    value: {
-      type: [String, Number, Object],
-      default: ''
-    },
-    alt: {
-      type: String,
-      default: ''
-    },
-    comment: {
-      type: String,
-      default: ''
-    }
+  value: {
+    type: [String, Number, Object],
+    default: ''
   },
-  computed: {
-    componentName() {
-      const components = {
-        image: 'ImageCell',
-        description: 'DescriptionCell',
-        price: 'PriceCell',
-        discount: 'DiscountCell',
-        availability: 'AvailabilityCell',
-        rating: 'RatingCell',
-        size: 'SizeCell',
-        weight: 'WeightCell',
-        category: 'CategoryCell'
-      }
-      return components[this.type] || 'DefaultCell'
-    },
-    cellProps() {
-      const baseProps = { value: this.value }
-      
-      if (this.type === 'image') {
-        return { ...baseProps, alt: this.alt }
-      }
-      
-      if (this.type === 'rating') {
-        return { ...baseProps, comment: this.comment }
-      }
-      
-      return baseProps
-    }
+  alt: {
+    type: String,
+    default: ''
+  },
+  comment: {
+    type: String,
+    default: ''
   }
-}
+})
+
+const cellComponent = computed(() => {
+  const map = {
+    image: Cells.ImageCell,
+    description: Cells.DescriptionCell,
+    price: Cells.PriceCell,
+    discount: Cells.DiscountCell,
+    availability: Cells.AvailabilityCell,
+    rating: Cells.RatingCell,
+    size: Cells.SizeCell,
+    weight: Cells.WeightCell,
+    category: Cells.CategoryCell
+  }
+  return map[props.type] || Cells.DefaultCell
+})
+
+const cellProps = computed(() => {
+  if (props.type === 'image') return { value: props.value, alt: props.alt }
+  if (props.type === 'rating') return { value: props.value, comment: props.comment }
+  return { value: props.value }
+})
 </script>
 
 <style lang="scss" scoped>

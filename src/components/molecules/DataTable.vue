@@ -29,10 +29,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import {
-  TABLE_COLUMN_KEYS,
-  SCOPED_SLOT_TYPES
+  TABLE_CELL_TYPE
 } from '@/constants/content'
 import { TableCell } from '@/components'
 import {
@@ -41,54 +40,29 @@ import {
   getRatingComment
 } from '@/utils/tableHelpers'
 
-export default {
-  name: 'DataTable',
-  components: {
-    TableCell
+defineProps({
+  data: {
+    type: Array,
+    default: () => []
   },
-  props: {
-    data: {
-      type: Array,
-      default: () => []
-    },
-    tableColumnData: {
-      type: Array,
-      default: () => []
-    }
-  },
-  data() {
-    return {
-      TABLE_COLUMN_KEYS,
-      SCOPED_SLOT_TYPES
-    }
-  },
-  methods: {
-    getColStyle,
-    getNestedValue,
-    getRatingComment,
-    getCellType(field) {
-      if (field.scopedSlots?.customRender === SCOPED_SLOT_TYPES.IMAGE_ACTION) return 'image'
-      if (field.scopedSlots?.customRender === SCOPED_SLOT_TYPES.DESCRIPTION_ACTION) return 'description'
-      if (field.scopedSlots?.customRender === SCOPED_SLOT_TYPES.PRICE_ACTION) return 'price'
-      if (field.scopedSlots?.customRender === SCOPED_SLOT_TYPES.DISCOUNT_ACTION) return 'discount'
-      if (field.scopedSlots?.customRender === SCOPED_SLOT_TYPES.AVAILABILITY_ACTION) return 'availability'
-      if (field.scopedSlots?.customRender === SCOPED_SLOT_TYPES.RATING_ACTION) return 'rating'
-      if (field.key === TABLE_COLUMN_KEYS.DIMENSIONS) return 'size'
-      if (field.key === TABLE_COLUMN_KEYS.WEIGHT) return 'weight'
-      if (field.key === TABLE_COLUMN_KEYS.BARCODE) return 'barcode'
-      if (field.key === TABLE_COLUMN_KEYS.CATEGORY) return 'category'
-      return 'default'
-    },
-    getCellValue(item, field) {
-      return getNestedValue(item, field.key)
-    }
+  tableColumnData: {
+    type: Array,
+    default: () => []
   }
+})
+
+const getCellType = (field) => {
+  return TABLE_CELL_TYPE[field.scopedSlots?.customRender] ||
+    TABLE_CELL_TYPE[field.key] ||
+    'default'
+}
+
+const getCellValue = (item, field) => {
+  return getNestedValue(item, field.key)
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables.scss';
-
 .table-wrapper {
   width: 100%;
   margin-right: auto;
@@ -107,6 +81,7 @@ export default {
     border: none;
     width: 100%;
     overflow: auto;
+
     &.fixed-header {
       th {
         position: sticky;
@@ -114,6 +89,7 @@ export default {
         z-index: 2;
       }
     }
+
     & .table-head {
       font-style: normal;
       font-weight: 500;
@@ -123,6 +99,7 @@ export default {
       white-space: nowrap;
       position: relative;
       text-align: left;
+
       & tr {
         & th {
           background: #f5f5f5;
@@ -131,9 +108,11 @@ export default {
           font-weight: 600;
           border-bottom: 1px solid #dadada;
           border-right: 1px solid #dadada;
+
           &:first-child {
             border-radius: 8px 0px 0px 0px;
           }
+
           &:last-child {
             border-radius: 0px 8px 0px 0px;
             border-right: none;
@@ -141,6 +120,7 @@ export default {
         }
       }
     }
+
     & .table-body {
       & tr {
         padding: 16px;
@@ -148,15 +128,18 @@ export default {
 
         & td {
           border-right: 1px solid #dadada;
+
           &:last-child {
             border-right: none;
           }
         }
+
         &:hover {
           cursor: pointer;
         }
       }
     }
+
     & td {
       border-bottom: 1px solid #dadada;
       background: #ffffff;

@@ -1,30 +1,21 @@
 <template>
   <div class="description-text">
-    {{ truncateText(value, DEFAULT_VALUES.DESCRIPTION_MAX_LENGTH) }}
+    {{ truncateTextMethod(value, DEFAULT_VALUES.DESCRIPTION_MAX_LENGTH) }}
   </div>
 </template>
 
-<script>
+<script setup>
 import { DEFAULT_VALUES } from '@/constants/content'
 import { truncateText } from '@/utils/tableHelpers'
 
-export default {
-  name: 'DescriptionCell',
-  props: {
-    value: {
-      type: String,
-      default: ''
-    }
-  },
-  data() {
-    return {
-      DEFAULT_VALUES
-    }
-  },
-  methods: {
-    truncateText
+defineProps({
+  value: {
+    type: String,
+    default: ''
   }
-}
+})
+
+const truncateTextMethod = (value, maxLength) => truncateText(value, maxLength)
 </script>
 
 <style lang="scss" scoped>

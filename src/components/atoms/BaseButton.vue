@@ -4,29 +4,27 @@
   </button>
 </template>
 
-<script>
-export default {
-  name: 'BaseButton',
-  props: {
-    disabled: {
-      type: Boolean,
-      default: false
-    }
-  },
-  computed: {
-    buttonClasses() {
-      return [
-        'base-button',
-        { 'base-button--disabled': this.disabled }
-      ]
-    }
+<script setup>
+import { computed } from 'vue'
+
+const props = defineProps({
+  disabled: {
+    type: Boolean,
+    default: false
   }
-}
+})
+
+defineEmits(['click'])
+
+const buttonClasses = computed(() => {
+  return [
+    'base-button',
+    { 'base-button--disabled': props.disabled }
+  ]
+})
 </script>
 
-<style lang="scss" scoped>
-@import '@/assets/styles/variables.scss';
-
+<style scoped>
 .base-button {
     border: none;
     border-radius: 4px;
@@ -38,21 +36,21 @@ export default {
     justify-content: center;
     padding: 8px 16px;
     font-size: 14px;
-    background-color: $primary-color;
+    background-color: #007bff;
     color: white;
+}
 
-    &:focus {
-        outline: none;
-        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-    }
+.base-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
 
-    &:hover:not(:disabled) {
-        background-color: darken($primary-color, 10%);
-    }
+.base-button:hover:not(:disabled) {
+    filter: brightness(0.9);
+}
 
-    &--disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-    }
+.base-button--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 </style>

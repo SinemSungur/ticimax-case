@@ -5,24 +5,20 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'RatingCell',
-  props: {
-    value: {
-      type: [String, Number],
-      default: ''
-    },
-    comment: {
-      type: String,
-      default: ''
-    }
+<script setup>
+defineProps({
+  value: {
+    type: [String, Number],
+    default: ''
+  },
+  comment: {
+    type: String,
+    default: ''
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables.scss';
 
 .rating-container {
   display: flex;

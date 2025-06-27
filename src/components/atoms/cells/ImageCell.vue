@@ -5,30 +5,21 @@
       :alt="alt"
       class="product-image"
       loading="lazy"
-      @error="handleImageError"
     >
   </div>
 </template>
 
-<script>
-import { handleImageError } from '@/utils/tableHelpers'
-
-export default {
-  name: 'ImageCell',
-  props: {
-    value: {
-      type: String,
-      default: ''
-    },
-    alt: {
-      type: String,
-      default: ''
-    }
+<script setup>
+defineProps({
+  value: {
+    type: String,
+    default: ''
   },
-  methods: {
-    handleImageError
+  alt: {
+    type: String,
+    default: ''
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

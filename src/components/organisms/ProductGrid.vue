@@ -48,55 +48,41 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { BaseSpinner, SortControl, BasePagination, DataTable, NoData } from '@/components'
 import {
   ERROR_MESSAGES,
   TABLE_COLUMNS_CONFIG
 } from '@/constants/content'
 
-export default {
-  name: 'ProductGrid',
-  components: {
-    BaseSpinner,
-    SortControl,
-    BasePagination,
-    DataTable,
-    NoData
+defineProps({
+  products: {
+    type: Array,
+    default: () => []
   },
-  props: {
-    products: {
-      type: Array,
-      default: () => []
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    error: {
-      type: Boolean,
-      default: false
-    },
-    currentPage: {
-      type: Number,
-      required: true
-    },
-    totalPages: {
-      type: Number,
-      required: true
-    },
-    currentSort: {
-      type: String,
-      required: true
-    }
+  loading: {
+    type: Boolean,
+    default: false
   },
-  data() {
-    return {
-      ERROR_MESSAGES,
-      TABLE_COLUMNS_CONFIG
-    }
+  error: {
+    type: Boolean,
+    default: false
+  },
+  currentPage: {
+    type: Number,
+    required: true
+  },
+  totalPages: {
+    type: Number,
+    required: true
+  },
+  currentSort: {
+    type: String,
+    required: true
   }
-}
+})
+
+defineEmits(['retry', 'sort-change', 'page-change'])
 </script>
 
 <style lang="scss" scoped>

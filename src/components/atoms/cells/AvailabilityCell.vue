@@ -1,25 +1,21 @@
 <template>
-  <div class="availability-cell" :class="getAvailabilityClass(value)">
-    {{ formatAvailability(value) }}
+  <div class="availability-cell" :class="getAvailabilityClassMethod(value)">
+    {{ formatAvailabilityMethod(value) }}
   </div>
 </template>
 
-<script>
+<script setup>
 import { formatAvailability, getAvailabilityClass } from '@/utils/tableHelpers'
 
-export default {
-  name: 'AvailabilityCell',
-  props: {
-    value: {
-      type: String,
-      default: ''
-    }
-  },
-  methods: {
-    formatAvailability,
-    getAvailabilityClass
+defineProps({
+  value: {
+    type: String,
+    default: ''
   }
-}
+})
+
+const formatAvailabilityMethod = (value) => formatAvailability(value)
+const getAvailabilityClassMethod = (value) => getAvailabilityClass(value)
 </script>
 
 <style lang="scss" scoped>

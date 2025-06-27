@@ -1,12 +1,12 @@
 <template>
   <div class="product-list-page">
     <ProductListTemplate
-      :products="products"
-      :loading="loading"
-      :error="error"
-      :current-sort="currentSort"
-      :current-page="currentPage"
-      :total-pages="totalPages"
+      :products="productsStore.sortedProducts"
+      :loading="productsStore.isLoading"
+      :error="productsStore.hasError"
+      :current-sort="productsStore.sort"
+      :current-page="productsStore.currentPage"
+      :total-pages="productsStore.totalPages"
       @sort-change="handleSortChange"
       @page-change="handlePageChange"
       @retry="fetchProducts"
@@ -14,79 +14,70 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { watch, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useProductsStore } from '@/store/modules/products'
 import { ProductListTemplate } from '@/components'
-import { mapState, mapActions } from 'vuex'
-import { DEFAULT_VALUES } from '@/constants/content'
 
-export default {
-  name: 'ProductList',
-  components: {
-    ProductListTemplate
-  },
-  data() {
-    return {
-      currentPage: 1,
-      currentSort: '',
-      itemsPerPage: DEFAULT_VALUES.ITEMS_PER_PAGE
-    }
-  },
-  computed: {
-    ...mapState('products', ['products', 'loading', 'error', 'totalItems']),
-    totalPages() {
-      return Math.ceil(this.totalItems / this.itemsPerPage)
-    }
-  },
-  watch: {
-    $route(to) {
-      this.syncStateFromQuery(to.query)
-    }
-  },
-  mounted() {
-    this.syncStateFromQuery(this.$route.query)
-    this.fetchProducts({ page: this.currentPage, sort: this.currentSort })
-  },
-  methods: {
-    ...mapActions('products', ['fetchProducts']),
-    syncStateFromQuery(query) {
-      const page = parseInt(query.page) || 1
-      const sort = query.sort || ''
-      
-      this.currentPage = page
-      this.currentSort = sort
-    },
-    updateQuery() {
-      const query = {}
-      if (this.currentPage > 1) {
-        query.page = this.currentPage
-      }
-      if (this.currentSort) {
-        query.sort = this.currentSort
-      }
-      
-      this.$router.push({
-        path: this.$route.path,
-        query
-      }).catch(() => {})
-    },
-    handleSortChange(sortDirection) {
-      this.currentSort = sortDirection
-      this.updateQuery()
-      this.fetchProducts({
-        page: this.currentPage,
-        sort: this.currentSort
-      })
-    },
-    handlePageChange(page) {
-      this.currentPage = page
-      this.updateQuery()
-      this.fetchProducts({
-        page: this.currentPage,
-        sort: this.currentSort
-      })
-    }
-  }
+const route = useRoute()
+const router = useRouter()
+const productsStore = useProductsStore()
+
+const syncStateFromQuery = (query) => {
+  const page = parseInt(query.page) || 1
+  const sort = query.sort || ''
+  productsStore.setPage(page)
+  productsStore.setSort(sort)
 }
+
+const updateQuery = () => {
+  const query = {}
+  if (productsStore.currentPage > 1) {
+    query.page = productsStore.currentPage
+  }
+  if (productsStore.sort) {
+    query.sort = productsStore.sort
+  }
+  router.push({
+    path: route.path,
+    query
+  }).catch(() => {})
+}
+
+const handleSortChange = (sortDirection) => {
+  productsStore.setSort(sortDirection)
+  updateQuery()
+  productsStore.fetchProducts({
+    page: productsStore.currentPage,
+    sort: productsStore.sort
+  })
+}
+
+const handlePageChange = (page) => {
+  productsStore.setPage(page)
+  updateQuery()
+  productsStore.fetchProducts({
+    page: productsStore.currentPage,
+    sort: productsStore.sort
+  })
+}
+
+const fetchProducts = () => {
+  productsStore.fetchProducts({
+    page: productsStore.currentPage,
+    sort: productsStore.sort
+  })
+}
+
+watch(() => route.query, (newQuery) => {
+  syncStateFromQuery(newQuery)
+}, { immediate: true })
+
+onMounted(() => {
+  syncStateFromQuery(route.query)
+  fetchProducts()
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,76 +1,74 @@
+import { defineStore } from 'pinia'
 import axios from 'axios'
-import { API_CONFIG } from '@/constants/content'
+import { API_CONFIG, ERROR_MESSAGES } from '@/constants/content'
 
-const state = {
-  products: [],
-  loading: false,
-  error: null,
-  totalItems: 0,
-  currentPage: 1,
-  sort: '',
-  itemsPerPage: 12
-}
+export const useProductsStore = defineStore('products', {
+  state: () => ({
+    products: [],
+    totalItems: 0,
+    loading: false,
+    error: null,
+    currentPage: 1,
+    sort: '',
+    itemsPerPage: 12
+  }),
 
-const getters = {
-  sortedProducts: state => [...state.products],
-  totalItems: state => state.totalItems
-}
-
-const mutations = {
-  SET_PRODUCTS(state, products) {
-    state.products = products
+  getters: {
+    sortedProducts: (state) => [...state.products],
+    totalPages: (state) => Math.ceil(state.totalItems / state.itemsPerPage),
+    hasProducts: (state) => state.products.length > 0,
+    hasError: (state) => !!state.error,
+    isLoading: (state) => state.loading
   },
-  SET_LOADING(state, loading) {
-    state.loading = loading
-  },
-  SET_ERROR(state, error) {
-    state.error = error
-  },
-  SET_TOTAL_ITEMS(state, totalItems) {
-    state.totalItems = totalItems
-  },
-  SET_CURRENT_PAGE(state, page) {
-    state.currentPage = page
-  },
-  SET_SORT(state, sort) {
-    state.sort = sort
-  }
-}
 
-const actions = {
-  async fetchProducts({ commit, state }, { page = 1, sort = '' } = {}) {
-    commit('SET_LOADING', true)
-    commit('SET_ERROR', null)
+  actions: {
+    resetState() {
+      this.products = []
+      this.totalItems = 0
+      this.loading = false
+      this.error = null
+      this.currentPage = 1
+      this.sort = ''
+    },
 
-    try {
-      const limit = state.itemsPerPage
-      const skip = (page - 1) * limit
+    clearError() {
+      this.error = null
+    },
 
-      let url = `${API_CONFIG.BASE_URL}?limit=${limit}&skip=${skip}`
+    async fetchProducts({ page = 1, sort = '' } = {}) {
+      this.loading = true
+      this.error = null
 
-      if (sort) {
-        url += `&sortBy=price&order=${sort}`
+      try {
+        const limit = this.itemsPerPage
+        const skip = (page - 1) * limit
+
+        let url = `${API_CONFIG.BASE_URL}?limit=${limit}&skip=${skip}`
+
+        if (sort) {
+          url += `&sortBy=price&order=${sort}`
+        }
+
+        const response = await axios.get(url)
+        const { products, total } = response.data
+
+        this.products = products
+        this.totalItems = total
+        this.currentPage = page
+        this.sort = sort
+      } catch (error) {
+        this.error = error.message || ERROR_MESSAGES.FETCH_PRODUCTS_ERROR
+      } finally {
+        this.loading = false
       }
+    },
 
-      const response = await axios.get(url)
-      const { products, total } = response.data
+    setPage(page) {
+      this.currentPage = page
+    },
 
-      commit('SET_PRODUCTS', products)
-      commit('SET_TOTAL_ITEMS', total)
-      commit('SET_CURRENT_PAGE', page)
-      commit('SET_SORT', sort)
-    } catch (error) {
-      commit('SET_ERROR', error.message)
-    } finally {
-      commit('SET_LOADING', false)
+    setSort(sort) {
+      this.sort = sort
     }
   }
-}
-
-export default {
-  namespaced: true,
-  state,
-  getters,
-  mutations,
-  actions
-}
+})

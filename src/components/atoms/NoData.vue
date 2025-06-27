@@ -19,39 +19,30 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import BaseButton from './BaseButton.vue'
 import { ERROR_MESSAGES, BUTTON_LABELS, ALT_TEXT } from '@/constants/content'
 
-export default {
-  name: 'NoData',
-  components: {
-    BaseButton
+defineProps({
+  title: {
+    type: String,
+    default: ERROR_MESSAGES.NO_PRODUCTS_FOUND
   },
-  props: {
-    title: {
-      type: String,
-      default: ERROR_MESSAGES.NO_PRODUCTS_FOUND
-    },
-    message: {
-      type: String,
-      default: ERROR_MESSAGES.NO_PRODUCTS_AVAILABLE
-    },
-    showRetryButton: {
-      type: Boolean,
-      default: false
-    },
-    retryButtonText: {
-      type: String,
-      default: BUTTON_LABELS.TRY_AGAIN
-    }
+  message: {
+    type: String,
+    default: ERROR_MESSAGES.NO_PRODUCTS_AVAILABLE
   },
-  data() {
-    return {
-      ALT_TEXT
-    }
+  showRetryButton: {
+    type: Boolean,
+    default: false
+  },
+  retryButtonText: {
+    type: String,
+    default: BUTTON_LABELS.TRY_AGAIN
   }
-}
+})
+
+defineEmits(['retry'])
 </script>
 
 <style lang="scss" scoped>

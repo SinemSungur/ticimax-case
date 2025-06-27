@@ -32,7 +32,8 @@ export const formatDiscount = (discount) => {
 
 export const formatAvailability = (status) => {
   if (!status) return AVAILABILITY_STATUS.UNKNOWN
-  return status === AVAILABILITY_STATUS.IN_STOCK ? AVAILABILITY_STATUS.IN_STOCK : AVAILABILITY_STATUS.OUT_OF_STOCK
+  const isInStock = status === AVAILABILITY_STATUS.IN_STOCK
+  return isInStock ? AVAILABILITY_STATUS.IN_STOCK : AVAILABILITY_STATUS.OUT_OF_STOCK
 }
 
 export const getAvailabilityClass = (status) => {

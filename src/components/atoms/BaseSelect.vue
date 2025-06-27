@@ -16,52 +16,57 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'BaseSelect',
-  props: {
-    value: {
-      type: [String, Number],
-      default: ''
-    },
-    options: {
-      type: Array,
-      required: true,
-      validator: options => options.every(option =>
-        typeof option === 'object' &&
-        'value' in option &&
-        'label' in option
-      )
-    }
+<script setup>
+defineProps({
+  value: {
+    type: [String, Number],
+    default: ''
+  },
+  options: {
+    type: Array,
+    required: true
   }
-}
+})
+
+defineEmits(['input'])
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables.scss';
-
-.base-select {
+.select-wrapper {
   position: relative;
+  display: inline-block;
 
-  &__input {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid $border-color;
+  select {
+    appearance: none;
+    background: white;
+    border: 1px solid #ddd;
     border-radius: 4px;
-    background-color: white;
+    padding: 8px 12px;
     font-size: 14px;
+    color: $text-color;
     cursor: pointer;
-    transition: border-color 0.2s ease;
+    min-width: 120px;
+    transition: border-color 0.2s;
 
     &:focus {
       outline: none;
       border-color: $primary-color;
-      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
     }
 
     &:hover {
-      border-color: darken($border-color, 10%);
+      border-color: #bbb;
     }
+  }
+
+  &::after {
+    content: '▼';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 12px;
+    color: #666;
   }
 }
 </style>

@@ -2,16 +2,13 @@
   <span class="default-text">{{ value || '' }}</span>
 </template>
 
-<script>
-export default {
-  name: 'DefaultCell',
-  props: {
-    value: {
-      type: [String, Number, Object],
-      default: ''
-    }
+<script setup>
+defineProps({
+  value: {
+    type: [String, Number, Object],
+    default: ''
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

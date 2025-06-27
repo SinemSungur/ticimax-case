@@ -1,24 +1,20 @@
 <template>
   <div class="category-text">
-    {{ capitalizeFirstLetter(value) }}
+    {{ capitalizeFirstLetterMethod(value) }}
   </div>
 </template>
 
-<script>
+<script setup>
 import { capitalizeFirstLetter } from '@/utils/tableHelpers'
 
-export default {
-  name: 'CategoryCell',
-  props: {
-    value: {
-      type: String,
-      default: ''
-    }
-  },
-  methods: {
-    capitalizeFirstLetter
+defineProps({
+  value: {
+    type: String,
+    default: ''
   }
-}
+})
+
+const capitalizeFirstLetterMethod = (value) => capitalizeFirstLetter(value)
 </script>
 
 <style lang="scss" scoped>

@@ -11,6 +11,7 @@ This project demonstrates a production-ready product list application built with
 - **Modular Design**: Atomic Design principles for easy component updates
 - **Clean Code**: Well-organized codebase with clear separation of concerns
 - **Future-Proof**: Built with Vue 3 migration in mind from the start
+- **Modern Build Tool**: Vite for fast development and optimized builds
 
 ## Features
 
@@ -34,6 +35,7 @@ This project demonstrates a production-ready product list application built with
 - **Axios 0.27.2** - HTTP client (Vue 3 compatible)
 - **SCSS** - Styling (framework agnostic)
 - **ESLint 8.x** - Code quality (will be updated for Vue 3)
+- **Vite** - Modern build tool (replacing Vue CLI)
 
 ### Planned Migration (Vue 3)
 - **Vue 3.x** - Latest Vue framework with Composition API
@@ -72,7 +74,7 @@ src/
 
 2. Start development server:
    ```bash
-   npm run serve
+   npm run dev
    ```
 
 3. Build for production:
@@ -80,11 +82,25 @@ src/
    npm run build
    ```
 
-4. Run linting:
+4. Preview production build:
+   ```bash
+   npm run preview
+   ```
+
+5. Run linting:
    ```bash
    npm run lint
    npm run lint:fix
    ```
+
+## Development with Vite
+
+This project uses Vite for modern development experience:
+- **Hot Module Replacement (HMR)** - Instant updates during development
+- **ES modules** - Native browser support
+- **Optimized builds** - Tree-shaking and code splitting
+- **Fast development server** - Quick startup and reload times
+- **Modern tooling** - Latest development experience
 
 ## API Integration
 

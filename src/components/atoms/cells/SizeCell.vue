@@ -1,28 +1,23 @@
 <template>
   <div class="size-text">
-    {{ formatDimensions(value) }}
+    {{ formatDimensionsMethod(value) }}
   </div>
 </template>
 
-<script>
+<script setup>
 import { formatDimensions } from '@/utils/tableHelpers'
 
-export default {
-  name: 'SizeCell',
-  props: {
-    value: {
-      type: [String, Object],
-      default: ''
-    }
-  },
-  methods: {
-    formatDimensions
+defineProps({
+  value: {
+    type: [String, Object],
+    default: ''
   }
-}
+})
+
+const formatDimensionsMethod = (value) => formatDimensions(value)
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables.scss';
 
 .size-text {
   font-family: $font-family-base;

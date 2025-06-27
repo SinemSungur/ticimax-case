@@ -5,80 +5,102 @@
       class="pagination-btn"
       @click="$emit('page-change', 1)"
     >
-      {{ BUTTON_LABELS.FIRST }}
+      {{ buttonLabels.FIRST }}
     </BaseButton>
     <BaseButton
       :disabled="currentPage === 1"
       class="pagination-btn"
       @click="$emit('page-change', currentPage - 1)"
     >
-      {{ BUTTON_LABELS.PREVIOUS }}
+      {{ buttonLabels.PREVIOUS }}
     </BaseButton>
     <span class="pagination-info">
-      {{ LABELS.PAGE_INFO }} {{ currentPage }} / {{ totalPages }}
+      {{ labels.PAGE_INFO }} {{ currentPage }} / {{ totalPages }}
     </span>
     <BaseButton
       :disabled="currentPage === totalPages"
       class="pagination-btn"
       @click="$emit('page-change', currentPage + 1)"
     >
-      {{ BUTTON_LABELS.NEXT }}
+      {{ buttonLabels.NEXT }}
     </BaseButton>
     <BaseButton
       :disabled="currentPage === totalPages"
       class="pagination-btn"
       @click="$emit('page-change', totalPages)"
     >
-      {{ BUTTON_LABELS.LAST }}
+      {{ buttonLabels.LAST }}
     </BaseButton>
   </nav>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
 import { BaseButton } from '@/components'
 import { BUTTON_LABELS, LABELS } from '@/constants/content'
 
-export default {
-  name: 'BasePagination',
-  components: {
-    BaseButton
+const buttonLabels = ref(BUTTON_LABELS)
+const labels = ref(LABELS)
+
+defineProps({
+  currentPage: {
+    type: Number,
+    required: true
   },
-  props: {
-    currentPage: {
-      type: Number,
-      required: true
-    },
-    totalPages: {
-      type: Number,
-      required: true
-    }
-  },
-  data() {
-    return {
-      BUTTON_LABELS,
-      LABELS
-    }
+  totalPages: {
+    type: Number,
+    required: true
   }
-}
+})
+
+defineEmits(['page-change'])
+
+defineOptions({
+  name: 'BasePagination'
+})
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables.scss';
-
 .pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin: 20px 0;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 16px;
 
-    .pagination-info {
-        font-size: 14px;
-        color: $text-secondary;
-        font-weight: 500;
-        min-width: 80px;
-        text-align: center;
+  .pagination-button {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: white;
+    color: $text-color;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.2s;
+
+    &:hover:not(:disabled) {
+      background: $primary-color;
+      color: white;
+      border-color: $primary-color;
     }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &.active {
+      background: $primary-color;
+      color: white;
+      border-color: $primary-color;
+    }
+  }
+
+  .page-info {
+    font-size: 14px;
+    color: $text-color;
+    margin: 0 16px;
+  }
 }
 </style>

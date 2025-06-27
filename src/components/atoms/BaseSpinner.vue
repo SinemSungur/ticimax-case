@@ -4,13 +4,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'BaseSpinner'
-}
+<script setup>
 </script>
 
 <style lang="scss" scoped>
+
 .base-spinner {
   display: flex;
   justify-content: center;

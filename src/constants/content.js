@@ -5,7 +5,9 @@ export const PAGE_TITLES = {
 export const ERROR_MESSAGES = {
   NO_PRODUCTS_FOUND: 'No Products Found',
   NO_PRODUCTS_AVAILABLE: 'No products available on this page.',
-  IMAGE_LOAD_FAILED: 'Image failed to load'
+  IMAGE_LOAD_FAILED: 'Image failed to load',
+  GENERAL_ERROR: 'Something went wrong',
+  FETCH_PRODUCTS_ERROR: 'Failed to fetch products'
 }
 
 export const ALT_TEXT = {
@@ -32,25 +34,16 @@ export const SORT_OPTIONS = [
   { value: 'desc', label: 'Price (High to Low)' }
 ]
 
-export const TABLE_COLUMNS = {
-  IMAGE: 'Image',
-  PRODUCT_NAME: 'Product Name',
-  DESCRIPTION: 'Description',
-  PRICE: 'Price ($)',
-  DISCOUNT: 'Discount (%)',
-  CATEGORY: 'Category',
-  BRAND: 'Brand',
-  STOCK: 'Stock',
-  AVAILABILITY: 'Availability',
-  MIN_ORDER_QTY: 'Min. Order Qty',
-  SKU: 'SKU',
-  BARCODE: 'Barcode',
-  SIZE: 'Size (W×H×D)',
-  WEIGHT: 'Weight (g)',
-  AVG_RATING: 'Avg. Rating',
-  WARRANTY: 'Warranty',
-  SHIPPING_INFO: 'Shipping Info',
-  RETURN_POLICY: 'Return Policy'
+export const TABLE_CELL_TYPE = {
+  imageAction: 'image',
+  descriptionAction: 'description',
+  priceAction: 'price',
+  discountAction: 'discount',
+  availabilityAction: 'availability',
+  ratingAction: 'rating',
+  dimensions: 'size',
+  weight: 'weight',
+  category: 'category'
 }
 
 export const TABLE_COLUMN_KEYS = {
@@ -74,36 +67,6 @@ export const TABLE_COLUMN_KEYS = {
   RETURN_POLICY: 'returnPolicy'
 }
 
-export const TABLE_COLUMN_WIDTHS = {
-  IMAGE: 120,
-  PRODUCT_NAME: 200,
-  DESCRIPTION: 250,
-  PRICE: 100,
-  DISCOUNT: 120,
-  CATEGORY: 120,
-  BRAND: 120,
-  STOCK: 80,
-  AVAILABILITY: 120,
-  MIN_ORDER_QTY: 120,
-  SKU: 120,
-  BARCODE: 160,
-  SIZE: 180,
-  WEIGHT: 100,
-  AVG_RATING: 100,
-  WARRANTY: 150,
-  SHIPPING_INFO: 150,
-  RETURN_POLICY: 150
-}
-
-export const SCOPED_SLOT_TYPES = {
-  IMAGE_ACTION: 'imageAction',
-  DESCRIPTION_ACTION: 'descriptionAction',
-  PRICE_ACTION: 'priceAction',
-  DISCOUNT_ACTION: 'discountAction',
-  AVAILABILITY_ACTION: 'availabilityAction',
-  RATING_ACTION: 'ratingAction'
-}
-
 export const DEFAULT_VALUES = {
   ITEMS_PER_PAGE: 12,
   DESCRIPTION_MAX_LENGTH: 100,
@@ -121,111 +84,111 @@ export const API_CONFIG = {
 
 export const TABLE_COLUMNS_CONFIG = [
   {
-    name: TABLE_COLUMNS.IMAGE,
-    width: TABLE_COLUMN_WIDTHS.IMAGE,
+    name: 'Image',
+    width: 120,
     key: TABLE_COLUMN_KEYS.THUMBNAIL,
     scopedSlots: {
-      customRender: SCOPED_SLOT_TYPES.IMAGE_ACTION
+      customRender: 'imageAction'
     }
   },
   {
-    name: TABLE_COLUMNS.PRODUCT_NAME,
-    width: TABLE_COLUMN_WIDTHS.PRODUCT_NAME,
+    name: 'Product Name',
+    width: 200,
     key: TABLE_COLUMN_KEYS.TITLE
   },
   {
-    name: TABLE_COLUMNS.DESCRIPTION,
-    width: TABLE_COLUMN_WIDTHS.DESCRIPTION,
+    name: 'Description',
+    width: 250,
     key: TABLE_COLUMN_KEYS.DESCRIPTION,
     scopedSlots: {
-      customRender: SCOPED_SLOT_TYPES.DESCRIPTION_ACTION
+      customRender: 'descriptionAction'
     }
   },
   {
-    name: TABLE_COLUMNS.PRICE,
-    width: TABLE_COLUMN_WIDTHS.PRICE,
+    name: 'Price ($)',
+    width: 100,
     key: TABLE_COLUMN_KEYS.PRICE,
     scopedSlots: {
-      customRender: SCOPED_SLOT_TYPES.PRICE_ACTION
+      customRender: 'priceAction'
     }
   },
   {
-    name: TABLE_COLUMNS.DISCOUNT,
-    width: TABLE_COLUMN_WIDTHS.DISCOUNT,
+    name: 'Discount (%)',
+    width: 120,
     key: TABLE_COLUMN_KEYS.DISCOUNT_PERCENTAGE,
     scopedSlots: {
-      customRender: SCOPED_SLOT_TYPES.DISCOUNT_ACTION
+      customRender: 'discountAction'
     }
   },
   {
-    name: TABLE_COLUMNS.CATEGORY,
-    width: TABLE_COLUMN_WIDTHS.CATEGORY,
+    name: 'Category',
+    width: 120,
     key: TABLE_COLUMN_KEYS.CATEGORY
   },
   {
-    name: TABLE_COLUMNS.BRAND,
-    width: TABLE_COLUMN_WIDTHS.BRAND,
+    name: 'Brand',
+    width: 120,
     key: TABLE_COLUMN_KEYS.BRAND
   },
   {
-    name: TABLE_COLUMNS.STOCK,
-    width: TABLE_COLUMN_WIDTHS.STOCK,
+    name: 'Stock',
+    width: 80,
     key: TABLE_COLUMN_KEYS.STOCK
   },
   {
-    name: TABLE_COLUMNS.AVAILABILITY,
-    width: TABLE_COLUMN_WIDTHS.AVAILABILITY,
+    name: 'Availability',
+    width: 120,
     key: TABLE_COLUMN_KEYS.AVAILABILITY_STATUS,
     scopedSlots: {
-      customRender: SCOPED_SLOT_TYPES.AVAILABILITY_ACTION
+      customRender: 'availabilityAction'
     }
   },
   {
-    name: TABLE_COLUMNS.MIN_ORDER_QTY,
-    width: TABLE_COLUMN_WIDTHS.MIN_ORDER_QTY,
+    name: 'Min. Order Qty',
+    width: 120,
     key: TABLE_COLUMN_KEYS.MINIMUM_ORDER_QUANTITY
   },
   {
-    name: TABLE_COLUMNS.SKU,
-    width: TABLE_COLUMN_WIDTHS.SKU,
+    name: 'SKU',
+    width: 120,
     key: TABLE_COLUMN_KEYS.SKU
   },
   {
-    name: TABLE_COLUMNS.BARCODE,
-    width: TABLE_COLUMN_WIDTHS.BARCODE,
+    name: 'Barcode',
+    width: 160,
     key: TABLE_COLUMN_KEYS.BARCODE
   },
   {
-    name: TABLE_COLUMNS.SIZE,
-    width: TABLE_COLUMN_WIDTHS.SIZE,
+    name: 'Size (W×H×D)',
+    width: 180,
     key: TABLE_COLUMN_KEYS.DIMENSIONS
   },
   {
-    name: TABLE_COLUMNS.WEIGHT,
-    width: TABLE_COLUMN_WIDTHS.WEIGHT,
+    name: 'Weight (g)',
+    width: 100,
     key: TABLE_COLUMN_KEYS.WEIGHT
   },
   {
-    name: TABLE_COLUMNS.AVG_RATING,
-    width: TABLE_COLUMN_WIDTHS.AVG_RATING,
+    name: 'Avg. Rating',
+    width: 100,
     key: TABLE_COLUMN_KEYS.RATING,
     scopedSlots: {
-      customRender: SCOPED_SLOT_TYPES.RATING_ACTION
+      customRender: 'ratingAction'
     }
   },
   {
-    name: TABLE_COLUMNS.WARRANTY,
-    width: TABLE_COLUMN_WIDTHS.WARRANTY,
+    name: 'Warranty',
+    width: 150,
     key: TABLE_COLUMN_KEYS.WARRANTY_INFORMATION
   },
   {
-    name: TABLE_COLUMNS.SHIPPING_INFO,
-    width: TABLE_COLUMN_WIDTHS.SHIPPING_INFO,
+    name: 'Shipping Info',
+    width: 150,
     key: TABLE_COLUMN_KEYS.SHIPPING_INFORMATION
   },
   {
-    name: TABLE_COLUMNS.RETURN_POLICY,
-    width: TABLE_COLUMN_WIDTHS.RETURN_POLICY,
+    name: 'Return Policy',
+    width: 150,
     key: TABLE_COLUMN_KEYS.RETURN_POLICY
   }
 ]
