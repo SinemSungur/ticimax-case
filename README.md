@@ -35,7 +35,6 @@ This project demonstrates a production-ready product list application built with
 - **Axios 0.27.2** - HTTP client (Vue 3 compatible)
 - **SCSS** - Styling (framework agnostic)
 - **ESLint 8.x** - Code quality (will be updated for Vue 3)
-- **Vite** - Modern build tool (replacing Vue CLI)
 
 ### Planned Migration (Vue 3)
 - **Vue 3.x** - Latest Vue framework with Composition API
